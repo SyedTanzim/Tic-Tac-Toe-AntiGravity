@@ -2,6 +2,7 @@ import { Model } from './model.js';
 import { View } from './view.js';
 
 export const Controller = (function () {
+    // Initialize the application by setting up view bindings and rendering the initial state
     function init() {
         View.initModals();
         View.bindStartGame(handleStartGame);
@@ -9,6 +10,7 @@ export const Controller = (function () {
         updateView();
     }
 
+    // Handles the start game button click, setting up players, modes, and resetting the board
     function handleStartGame(options) {
         Model.setGameMode(options.gameMode);
         Model.setPlayer1Name(options.p1Name);
@@ -26,6 +28,7 @@ export const Controller = (function () {
         updateView();
     }
 
+    // Handles the restart game button click, resetting the board and possibly triggering AI
     function handleRestartGame() {
         Model.resetBoard();
         View.hideWinnerBanner();
@@ -36,10 +39,12 @@ export const Controller = (function () {
         }
     }
 
+    // Handles a user click on a cell
     function handleCellClick(row, col) {
         playTurn(row, col);
     }
 
+    // Core game logic for executing a turn (placing mark, checking win/tie, switching turn)
     function playTurn(row, col) {
         if (Model.getIsGameOver()) return false;
 
@@ -79,6 +84,7 @@ export const Controller = (function () {
         return true;
     }
 
+    // Triggers the AI to make a move after a short delay
     function makeAiMove() {
         if (Model.getIsGameOver()) return;
         const move = Model.getBestMove();
@@ -89,6 +95,7 @@ export const Controller = (function () {
         }
     }
 
+    // Updates the view based on the current model state
     function updateView(winCells = null) {
         const isAiTurn = Model.getGameMode() === 'pvc' && Model.getCurrentPlayer() === Model.getPlayer2();
         View.renderBoard(Model.getBoard(), winCells, Model.getIsGameOver(), isAiTurn, handleCellClick);

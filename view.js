@@ -1,6 +1,8 @@
 export const View = (function () {
+    // Audio context for synthesizing game sounds
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+    // DOM Elements
     const startModal = document.getElementById('startModal');
     const startGameBtn = document.getElementById('startGameBtn');
     const p1NameInput = document.getElementById('p1Name');
@@ -18,6 +20,7 @@ export const View = (function () {
     const mainRestartBtn = document.getElementById('mainRestartBtn');
     const container = document.querySelector('.container');
 
+    // Generates synthesized sounds for interactions and game outcomes
     function playSound(type) {
         if (audioCtx.state === 'suspended') {
             audioCtx.resume();
@@ -57,6 +60,7 @@ export const View = (function () {
         }
     }
 
+    // Sets up event listeners for the configuration modals
     function initModals() {
         modeRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
@@ -71,6 +75,7 @@ export const View = (function () {
         });
     }
 
+    // Retrieves user inputs from the start game modal
     function getStartGameOptions() {
         return {
             gameMode: document.querySelector('input[name="gameMode"]:checked').value,
@@ -80,25 +85,30 @@ export const View = (function () {
         };
     }
 
+    // Hides the start game configuration modal
     function hideStartModal() {
         startModal.classList.add('hidden');
     }
 
+    // Updates the scoreboard UI with the latest scores and player names
     function updateScoreBoard(p1Name, p2Name, scores) {
         scoreP1.textContent = `${p1Name}: ${scores.p1}`;
         scoreP2.textContent = `${p2Name}: ${scores.p2}`;
         scoreDraws.textContent = `Draws: ${scores.draws}`;
     }
 
+    // Displays the winner banner with a custom message
     function showWin(message) {
         winnerText.textContent = message;
         winnerBanner.classList.remove('hidden');
     }
 
+    // Hides the winner banner for a new game
     function hideWinnerBanner() {
         winnerBanner.classList.add('hidden');
     }
 
+    // Renders the 3x3 game board and attaches click/keyboard event listeners
     function renderBoard(board, winCells, isGameOver, isAiTurn, cellClickHandler) {
         container.textContent = '';
         
@@ -152,6 +162,7 @@ export const View = (function () {
         }
     }
 
+    // Binds the start game logic to the start button
     function bindStartGame(handler) {
         startGameBtn.addEventListener('click', () => {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -159,11 +170,13 @@ export const View = (function () {
         });
     }
 
+    // Binds the restart game logic to the restart buttons
     function bindRestartGame(handler) {
         mainRestartBtn.addEventListener('click', handler);
         bannerRestartBtn.addEventListener('click', handler);
     }
 
+    // Triggers a confetti animation for a win
     function playConfetti() {
         if (typeof window.confetti === 'function') {
             window.confetti({

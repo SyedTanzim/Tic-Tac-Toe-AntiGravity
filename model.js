@@ -1,4 +1,5 @@
 export const Model = (function () {
+    // Private state variables
     let board = [];
     let player1 = { name: 'Player 1', mark: 'X' };
     let player2 = { name: 'Player 2', mark: 'O' };
@@ -8,6 +9,7 @@ export const Model = (function () {
     let currentPlayer = player1;
     let isGameOver = false;
 
+    // Initialize an empty 3x3 game board
     function initBoard() {
         board = [];
         for (let i = 0; i < 3; i++) {
@@ -19,6 +21,7 @@ export const Model = (function () {
     }
     initBoard();
 
+    // Getters for accessing private state
     function getBoard() { return board; }
     function getPlayer1() { return player1; }
     function getPlayer2() { return player2; }
@@ -28,6 +31,7 @@ export const Model = (function () {
     function getCurrentPlayer() { return currentPlayer; }
     function getIsGameOver() { return isGameOver; }
 
+    // Setters for updating private state
     function setGameMode(mode) { gameMode = mode; }
     function setAiDifficulty(diff) { aiDifficulty = diff; }
     function setPlayer1Name(name) { player1.name = name || 'Player 1'; }
@@ -37,16 +41,19 @@ export const Model = (function () {
     function incrementScoreDraws() { scores.draws++; }
     function setIsGameOver(state) { isGameOver = state; }
 
+    // Resets the board and game state for a new round
     function resetBoard() {
         initBoard();
         currentPlayer = player1;
         isGameOver = false;
     }
 
+    // Toggles the active player
     function switchTurn() {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
     }
 
+    // Attempts to place a mark on the board. Returns true if successful.
     function setMark(row, col, mark) {
         if (board[row][col] === null) {
             board[row][col] = mark;
@@ -55,6 +62,7 @@ export const Model = (function () {
         return false;
     }
 
+    // Checks the board for a win condition. Returns winner and winning line if found.
     function checkWinInfo(currentBoard) {
         for (let i = 0; i < 3; i++) {
             if (currentBoard[i][0] && currentBoard[i][0] === currentBoard[i][1] && currentBoard[i][1] === currentBoard[i][2]) {
@@ -75,6 +83,7 @@ export const Model = (function () {
         return null;
     }
 
+    // Checks if the board is completely filled with no winner
     function checkTie(currentBoard) {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -84,6 +93,7 @@ export const Model = (function () {
         return true;
     }
 
+    // Minimax algorithm to evaluate the board for the hardest AI difficulty
     function minimax(currentBoard, depth, isMaximizing) {
         let winInfo = checkWinInfo(currentBoard);
         if (winInfo) {
@@ -121,6 +131,7 @@ export const Model = (function () {
         }
     }
 
+    // Returns a random empty cell for easy AI
     function getRandomMove(currentBoard) {
         let emptyCells = [];
         for (let i = 0; i < 3; i++) {
@@ -132,6 +143,7 @@ export const Model = (function () {
         return emptyCells[Math.floor(Math.random() * emptyCells.length)];
     }
 
+    // Medium AI: Blocks human wins or takes immediate wins, otherwise random
     function getMediumMove(currentBoard) {
         // Can AI win?
         for (let i = 0; i < 3; i++) {
@@ -162,6 +174,7 @@ export const Model = (function () {
         return getRandomMove(currentBoard);
     }
 
+    // Hard AI: Uses the Minimax algorithm to find the optimal move
     function getHardMove(currentBoard) {
         let bestScore = -Infinity;
         let move = null;
@@ -181,6 +194,7 @@ export const Model = (function () {
         return move;
     }
 
+    // Returns the best AI move based on the selected difficulty
     function getBestMove() {
         if (aiDifficulty === 'easy') return getRandomMove(board);
         if (aiDifficulty === 'medium') return getMediumMove(board);
