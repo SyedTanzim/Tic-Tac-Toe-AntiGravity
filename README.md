@@ -2,7 +2,7 @@
 
 A browser-based Tic Tac Toe game built as part of **The Odin Project JavaScript curriculum**, featuring a modern neon UI, responsive design, and a multi-difficulty AI. This project demonstrates the implementation of the **Model-View-Controller (MVC) architecture** to ensure clean code organization and separation of concerns.
 
-🔗 Live Demo: https://syedtanzim.github.io/Tic-Tac-Toe/
+🔗 Live Demo: https://syedtanzim.github.io/Tic-Tac-Toe-AntiGravity
 ---
 
 ## Project Goals
