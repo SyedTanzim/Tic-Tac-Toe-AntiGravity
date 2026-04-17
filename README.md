@@ -2,7 +2,7 @@
 
 A browser-based Tic Tac Toe game built as part of **The Odin Project JavaScript curriculum**, with a focus on code organization, encapsulation, and separation of concerns.
 
-🔗 Live Demo: https://syedtanzim.github.io/Tic-Tac-Toe/
+🔗 Live Demo: https://syedtanzim.github.io/Tic-Tac-Toe/](https://syedtanzim.github.io/Tic-Tac-Toe-AntiGravity/
 ---
 
 ## Project Goals
